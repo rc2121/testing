@@ -1,29 +1,29 @@
 pipeline {
     agent any
-
+    tools {nodejs "my-nodejs"}
     stages {
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                nodejs("my-nodejs") {
+                    sh 'npm install'
+                }
             }
         }
 
         stage('Run Lint') {
             steps {
-                sh 'npm run lint' // Add this step if you have a linting script
+                nodejs("my-nodejs") {
+                    sh 'npm run lint' // Add this step if you have a linting script
+                }
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh 'npm test'
+                nodejs("my-nodejs") {
+                    sh 'npm test'
+                }
             }
-        }
-    }
-
-    post {
-        always {
-            junit 'test-results/**/*.xml' // Adjust this path if needed
         }
     }
 }
